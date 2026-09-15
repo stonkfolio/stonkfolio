@@ -1,0 +1,18 @@
+node_modules/
+dist/
+dist-dev/
+.verifiable-build/
+*.bundle
+target/
+test-ledger/
+test-ledger-fork/
+deployments/*.local.json
+*.log
+.keeper.lock
+.keeper-lp-ledger.json
+.keeper-distribute-cursor.json
+
+# Keypairs and secrets — never commit these
+.keys/
+*.env
+.env.*

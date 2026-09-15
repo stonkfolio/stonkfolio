@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = [
+    "programs/stonkfolio-distributor",
+]
+
+[profile.release]
+overflow-checks = true
+# NOTE: removing lto="fat"/codegen-units=1 here made zero difference to BPF
+# stack-frame overflows in `try_accounts` — cargo-build-sbf apparently doesn't
+# honor this workspace profile for the SBF artifact. The real fix is keeping
+# declarative `#[account(constraint = ...)]`/`has_one` checks out of Accounts
+# structs and doing them with imperative `require!()` in handler bodies
+# instead — only `try_accounts` itself is subject to the 4096-byte limit.
+
+[profile.release.build-override]
+opt-level = 3
+incremental = false
+codegen-units = 1
+
+# The Solana toolchain for reproducible builds (scripts/verifiable-build.sh, and
+# solana-verify, which reads this before Cargo.lock): the 2.2.20 CLI the program
+# is built and tested with. The 1.18 image matching solana-program ships Cargo
+# 1.75, which can't read this lock file (version 4).
+[workspace.metadata.cli]
+solana = "2.2.20"

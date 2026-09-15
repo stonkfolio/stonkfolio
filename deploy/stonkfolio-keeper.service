@@ -1,0 +1,67 @@
+# The Stonkfolio keeper: a long-running service that operates every coin in
+# the deployment with no human in the loop (see keeper/index.ts).
+#
+# Install:
+#   sudo useradd --system --home /nonexistent --shell /usr/sbin/nologin stonkfolio
+#   sudo cp deploy/stonkfolio-keeper.service /etc/systemd/system/
+#   sudo mkdir -p /etc/stonkfolio && sudo cp deploy/keeper.env.example /etc/stonkfolio/keeper.env
+#   sudo $EDITOR /etc/stonkfolio/keeper.env    # fill in real values
+#   sudo install -m 600 -o stonkfolio <keeper keypair> /etc/stonkfolio/keeper.json
+#   sudo chmod 600 /etc/stonkfolio/keeper.env
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now stonkfolio-keeper.service
+#
+# Watch it:
+#   journalctl -u stonkfolio-keeper.service -f
+
+[Unit]
+Description=Stonkfolio keeper
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=stonkfolio
+WorkingDirectory=/opt/stonkfolio
+EnvironmentFile=/etc/stonkfolio/keeper.env
+ExecStart=/usr/bin/node dist/keeper/index.js
+
+# Every round step is saved and every on-chain action re-checks chain state,
+# so restarting after a crash resumes safely instead of repeating work.
+Restart=always
+RestartSec=15
+# SIGTERM lets the current step finish before the keeper exits.
+KillSignal=SIGTERM
+TimeoutStopSec=300
+
+# State (sampling secrets, swap-wallet keys) lives in /var/lib/stonkfolio, owner-only.
+StateDirectory=stonkfolio
+StateDirectoryMode=0700
+UMask=0077
+
+# The keeper needs to write only its state and the artifacts clone.
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/stonkfolio /opt/stonkfolio-artifacts
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+SystemCallArchitectures=native
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+{
+  "name": "stonkfolio-metadata-upload",
+  "private": true,
+  "type": "module",
+  "description": "One-time upload of the coin logo and metadata JSON to Arweave through Irys. Kept apart from the keeper so the server build never installs it.",
+  "dependencies": {
+    "@irys/upload": "0.0.15",
+    "@irys/upload-solana": "0.1.8"
+  },
+  "overrides": {
+    "uuid": "^9.0.1",
+    "rpc-websockets": {
+      "uuid": "^9.0.1"
+    }
+  }
+}

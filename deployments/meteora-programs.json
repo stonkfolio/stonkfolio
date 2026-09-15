@@ -1,0 +1,18 @@
+{
+  "dynamic_bonding_curve": {
+    "programId": "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN",
+    "sha256": "4c26a8a5da99f8ce932fa0300c46675b527090021fbb74214c9486bedda9f23b",
+    "lastDeployedSlot": 445503633,
+    "upgradeAuthority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+  },
+  "damm_v2": {
+    "programId": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+    "sha256": "4d5b920baebc090f89b2e8796a3452ed067c9667a143058c96a312f2c1e6848b",
+    "lastDeployedSlot": 445230614,
+    "upgradeAuthority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+  },
+  "damm_v2_customizable_config": {
+    "address": "A8gMrEPJkacWkcb3DGwtJwTe16HktSEfvwtuDh2MCtck",
+    "sha256": "988089b8bacd1967ad85e4acd2bb520c847c872a74fed0614b01a89c57ae73a5"
+  }
+}

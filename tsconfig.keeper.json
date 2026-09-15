@@ -1,0 +1,7 @@
+{
+  // The keeper server's build: the keeper service, shared lib and launch scripts.
+  // Tests are left out because tests-validator needs target/ from a local `anchor build`,
+  // which the server never has.
+  "extends": "./tsconfig.json",
+  "include": ["keeper/**/*.ts", "lib/**/*.ts", "scripts/**/*.ts"]
+}

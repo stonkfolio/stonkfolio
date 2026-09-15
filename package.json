@@ -1,0 +1,36 @@
+{
+  "name": "stonkfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "tsc -p tsconfig.json && mocha -t 1000000 \"dist/tests/**/*.js\"",
+    "test:distributor": "tsc -p tsconfig.json && mocha -t 1000000 \"dist/tests-validator/**/*.js\"",
+    "test:mainnet-fork": "tsc -p tsconfig.json && mocha -t 60000 \"dist/tests-manual/**/*.js\"",
+    "verify-round": "tsc -p tsconfig.json && node dist/scripts/verify-round.js",
+    "fetch-graduated-mints": "tsc -p tsconfig.json && node dist/scripts/fetch-graduated-mints.js",
+    "simulate-mainnet-swap": "tsc -p tsconfig.json && node dist/scripts/simulate-mainnet-swap.js"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@meteora-ag/cp-amm-sdk": "1.4.8",
+    "@meteora-ag/dynamic-bonding-curve-sdk": "1.5.12",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.95.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.0",
+    "chai": "^4.4.1",
+    "mocha": "^10.7.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "overrides": {
+    "uuid": "^9.0.1",
+    "rpc-websockets": {
+      "uuid": "^9.0.1"
+    },
+    "chain": "0.4.2"
+  }
+}
