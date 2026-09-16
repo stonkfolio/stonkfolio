@@ -277,7 +277,7 @@ describe("launch lifecycle on a local mainnet fork", function () {
     expect(after.state.unlockedLiquidity.isZero()).to.be.true;
   });
 
-  it("runs the whole keeper unattended: fees fill the buckets, revenue and buybacks go out, liquidity locks, and a round pays holders", async () => {
+  it("runs the whole keeper unattended: fees fill the buckets, revenue and buybacks go out, and a round pays holders", async () => {
     const platformWallet = Keypair.generate();
     const eligible = Keypair.generate();
     const tooSmall = Keypair.generate();
@@ -388,7 +388,7 @@ describe("launch lifecycle on a local mainnet fork", function () {
       platformTokenPool: pool, // this coin is $STONKFOLIO itself
       store,
       engine,
-      shares: { basketBps: 7_000, coinBuybackBps: 500, liquidityBps: 500, platformBuybackBps: 1_000, platformRevenueBps: 1_000 },
+      shares: { basketBps: 7_000, flywheelBps: 500, platformBuybackBps: 1_000, platformRevenueBps: 1_500 },
       platformRevenueAddress: platformWallet.publicKey,
       thresholds: {
         minFeeClaimLamports: SOL / 100n,
@@ -425,8 +425,10 @@ describe("launch lifecycle on a local mainnet fork", function () {
     expect(logs.some((l) => l.startsWith("claimed "))).to.be.true;
     expect(await balance(platformWallet.publicKey) > 0n, "platform revenue was paid").to.be.true;
     expect((await getMint(connection, baseMint)).supply < supplyBefore, "buybacks burned supply").to.be.true;
+    // The split has no liquidity bucket (owner decision, 2026-09-15), so the keeper
+    // leaves the locked position alone; add-and-lock itself is covered by its own test above.
     const lockedAfter = (await findLockedPosition(cpAmm, dammPool, keeper.publicKey)).state.permanentLockedLiquidity;
-    expect(lockedAfter.gt(lockedBefore), "liquidity was added and locked").to.be.true;
+    expect(lockedAfter.eq(lockedBefore), "the keeper should not touch the locked position").to.be.true;
 
     const roundId = state.expiring[0].roundId;
     const bundle = store.bundleDir(roundId);

@@ -5,21 +5,19 @@
 import { expect } from "chai";
 import { splitByBps, splitRevenue, FeeSplitBps } from "../keeper/feeSplit";
 
-// Platform 20% (half $STONKFOLIO buyback, half revenue); the other 80% is
-// holders-first: basket 70%, coin buyback 5%, liquidity 5%.
+// The launch split (project owner, 2026-09-15): basket 70%, Stonkfolio
+// flywheel 5%, $FOLIO buyback 10%, platform revenue 15%.
 const SHARES: FeeSplitBps = {
   basketBps: 7_000,
-  coinBuybackBps: 500,
-  liquidityBps: 500,
+  flywheelBps: 500,
   platformBuybackBps: 1_000,
-  platformRevenueBps: 1_000,
+  platformRevenueBps: 1_500,
 };
 
 function total(split: ReturnType<typeof splitRevenue>): bigint {
   return (
     split.basketLamports +
-    split.coinBuybackLamports +
-    split.liquidityLamports +
+    split.flywheelLamports +
     split.platformBuybackLamports +
     split.platformRevenueLamports
   );
@@ -38,7 +36,7 @@ describe("feeSplit", () => {
     expect(() => splitByBps(100n, [5_000, 4_999])).to.throw(/expected 10000/);
   });
 
-  it("splitRevenue allocates the full received amount across all five buckets", () => {
+  it("splitRevenue allocates the full received amount across all four buckets", () => {
     const received = 987_654_321n;
     const split = splitRevenue(received, SHARES);
     expect(total(split)).to.equal(received);
@@ -48,13 +46,12 @@ describe("feeSplit", () => {
     expect(split.basketLamports - naiveBasket < 5n).to.be.true;
   });
 
-  it("splitRevenue matches the per-$4.00 example (5% tier, $100 volume)", () => {
+  it("splits 4 SOL of received fees the way the published split says", () => {
     const split = splitRevenue(4_000_000_000n, SHARES);
     expect(split.basketLamports).to.equal(2_800_000_000n);
-    expect(split.coinBuybackLamports).to.equal(200_000_000n);
-    expect(split.liquidityLamports).to.equal(200_000_000n);
+    expect(split.flywheelLamports).to.equal(200_000_000n);
     expect(split.platformBuybackLamports).to.equal(400_000_000n);
-    expect(split.platformRevenueLamports).to.equal(400_000_000n);
+    expect(split.platformRevenueLamports).to.equal(600_000_000n);
   });
 
   it("splitRevenue handles zero without throwing", () => {

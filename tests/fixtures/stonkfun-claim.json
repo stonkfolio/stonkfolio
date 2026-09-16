@@ -1,0 +1,122 @@
+{
+  "capturedAt": "2026-09-16T03:09:18.882Z",
+  "source": "https://www.stonkfun.xyz/api/public/v1/tokens/3Sv4Jriwo2V7c1wturGVrrpfKc9XbGxewnDHpMLrpbWQ/fees/claim/prepare",
+  "mint": "3Sv4Jriwo2V7c1wturGVrrpfKc9XbGxewnDHpMLrpbWQ",
+  "feeNftOwner": "4arR3ifTp6Ksfj9i4otH4R8APuF8zUWqSE1tgoRK7C5c",
+  "claim": {
+    "programId": "LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE",
+    "accounts": [
+      {
+        "pubkey": "kN1kEznaF5Xbd8LYuqtEFcxzWSBk5Fv6ygX6SqEGJVy",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "4arR3ifTp6Ksfj9i4otH4R8APuF8zUWqSE1tgoRK7C5c",
+        "isSigner": true,
+        "isWritable": true
+      },
+      {
+        "pubkey": "87Zj48DW3BnAxMHs3X7kWSDtUf1BbhCRaEX4sdn9bXsq",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "EcTjnN2x8aBR9qpdX3rHUpiXW6j36hsn2bji78ZbY9iU",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "AT9w2Yi5ysdrSAaGgSSdy1YdF4AX8skUSvo7msiftqKy",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "DGQia34Fzrbe3PdqfKW7YuTNyJSitnW2Lw6MxUUnfqJu",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "2ERrusBSySAXcfnEp4CBoLE4b2ZSiRVJd55Yz9im2yg4",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "B77BoSWkzeKPwUQH3Y9mCPMNcj6pfegx74LhEfywHmKt",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "Ds3aNaMu2e9mFGtXJEWkBxKTF1FH6oegBzBvonot4zPj",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "BHFDdQP4NrMDwEnrNjfjRFAZrQyWe4QdauZQTjoAvSiU",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "CZLhG5tyWakQ4tpEzWRHgn1U3obWbEApLLo4efsCwmjG",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "6u7Z4BorAFtFv3TiZAqruk1tiTqYYxQdzn1avbKDqZTW",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "FAoitkxWpYiKjUJg9BiMccmzsmYjumvnfLAS5iiTcW9t",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "9a6Y5iFDpfmUStLf7HbX8tY5CNatNJgxTQnunXcA54Jy",
+        "isSigner": false,
+        "isWritable": true
+      },
+      {
+        "pubkey": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "So11111111111111111111111111111111111111112",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "3Sv4Jriwo2V7c1wturGVrrpfKc9XbGxewnDHpMLrpbWQ",
+        "isSigner": false,
+        "isWritable": false
+      },
+      {
+        "pubkey": "FdwHuQ3KJkjnEWP23dtej4seiWzLDXN9v2a6SwN8HuS3",
+        "isSigner": false,
+        "isWritable": true
+      }
+    ],
+    "data": "EEj6xg6i1BM="
+  },
+  "accounts": {
+    "EcTjnN2x8aBR9qpdX3rHUpiXW6j36hsn2bji78ZbY9iU": "NBcFB6pabNX/Pk+EKn0LDJ7I4k6gOjHJ+HmjXcMEdYkaqu5dnrAIL/kSTFjr5DOqFdLy4pCLD7DGim5An7cAnFCWkcpr92UHwbY+xZafjPdAgCo6/J3WkB+ZPloSkyfd+ZKM157gwNCujGxh2t2w2XTZ+pd4UvUyU577NzmTraqIshWOxZtMfIT/+O2m3OdEt5NhvPm1KUMhES35m79P8E3gXrYBIkPTKgoEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+    "2ERrusBSySAXcfnEp4CBoLE4b2ZSiRVJd55Yz9im2yg4": "9+3j9dfD3kb86JgCWdxZD6PXs9CsnIeL7SSG0/6lGb9xfP0ZcWkCXB8+T4QqfQsMnsjiTqA6Mcn4eaNdwwR1iRqq7l2esAgv+QabiFf+q4GE+2h/Y0YYwDXaxDncGus7VZig8AAAAAABJFrix44wO5wl8yrbj5c9VAEQynsTIH41YbrPejkLlDm/HjIQPqI1CsEEBCIG+38g5Npf4JaWmlqAjcLYleAW0pi+PPzhLZHA0PS5Y8DjE2o8Z4y3vZyhb4RSmy7bAXsBqOovijRWQaRpMjW9yCSRQfgU1BGmtHg5PbpyvsUdNbQJCXgABQUgPxDNAAAAAAAAAAAAAGbyXxl82f7OgwQAAAAAAAACJwIAAAAAANDat9l7B8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANaGSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+T4QqfQsMnsjiTqA6Mcn4eaNdwwR1iRqq7l2esAgv+QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPk+EKn0LDJ7I4k6gOjHJ+HmjXcMEdYkaqu5dnrAIL/kAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD5PhCp9CwyeyOJOoDoxyfh5o13DBHWJGqruXZ6wCC/5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAgIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACKHZkEAAAAAAAAAAAAAAAAAAAAAAAAAAALBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+    "DGQia34Fzrbe3PdqfKW7YuTNyJSitnW2Lw6MxUUnfqJu": "Rm+WfuYPGXX9H8wAASrKJp+0w0DbK6AdoHb2gxpELVYPH3YpD93pJDUSTFjr5DOqFdLy4pCLD7DGim5An7cAnFCWkcpr92UHwQC0AABAkAIAxANYL8yZAAAAAAAAAAAAAOKL3GgpB8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  }
+}

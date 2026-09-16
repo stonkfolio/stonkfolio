@@ -105,8 +105,7 @@ async function run(stateRoot: string, isStopping: () => boolean): Promise<void> 
         engine,
         shares: {
           basketBps: config.BASKET_SHARE_BPS,
-          coinBuybackBps: config.COIN_BUYBACK_SHARE_BPS,
-          liquidityBps: config.LIQUIDITY_SHARE_BPS,
+          flywheelBps: config.FLYWHEEL_SHARE_BPS,
           platformBuybackBps: config.PLATFORM_BUYBACK_SHARE_BPS,
           platformRevenueBps: config.PLATFORM_REVENUE_SHARE_BPS,
         },

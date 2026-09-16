@@ -65,6 +65,7 @@ exec solana-test-validator \
   --reset \
   --quiet \
   --ledger test-ledger-fork \
+  --limit-ledger-size 10000000 \
   --url "$MAINNET_RPC_URL" \
   --mint "$AUTHORITY_PUBKEY" \
   --clone-upgradeable-program "$DBC_PROGRAM" \

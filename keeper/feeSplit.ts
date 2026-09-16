@@ -1,9 +1,8 @@
 /**
  * Pure fee-split math — no chain access, independently unit-testable. The
- * input is the SOL a launched coin actually received from its pool fees (DBC
- * curve fees, then DAMM v2 position fees after migration), already net of
- * Meteora's protocol share. Everything below is what the keeper does with
- * that balance, in plain TypeScript.
+ * input is the SOL a launched coin actually received from its pool fees,
+ * already net of the venue's own share. Everything below is what the keeper
+ * does with that balance, in plain TypeScript.
  */
 
 export const TOTAL_BPS = 10_000;
@@ -11,11 +10,9 @@ export const TOTAL_BPS = 10_000;
 export interface FeeSplitBps {
   /** Bought into the coin's basket and distributed to its holders. */
   basketBps: number;
-  /** Buys back and burns the launched coin itself. */
-  coinBuybackBps: number;
-  /** Added to the coin's permanently locked pool position while the pool is thin. */
-  liquidityBps: number;
-  /** Buys back and burns $STONKFOLIO, the platform token. */
+  /** Buys back and burns the top coins launched through Stonkfolio, by market cap. */
+  flywheelBps: number;
+  /** Buys back and burns $FOLIO, the platform token. */
   platformBuybackBps: number;
   /** Platform wallet. */
   platformRevenueBps: number;
@@ -39,23 +36,21 @@ export function splitByBps(total: bigint, sharesBps: number[], denominatorBps: n
 
 export interface RevenueSplit {
   basketLamports: bigint;
-  coinBuybackLamports: bigint;
-  liquidityLamports: bigint;
+  flywheelLamports: bigint;
   platformBuybackLamports: bigint;
   platformRevenueLamports: bigint;
 }
 
-/** Splits a coin's received fee revenue (lamports) five ways; all buckets stay in SOL. */
+/** Splits a coin's received fee revenue (lamports) four ways; all buckets stay in SOL. */
 export function splitRevenue(lamports: bigint, shares: FeeSplitBps): RevenueSplit {
   // basketBps last so it absorbs the remainder (it's the largest bucket) —
   // see splitByBps's contract.
-  const [coinBuybackLamports, liquidityLamports, platformBuybackLamports, platformRevenueLamports, basketLamports] =
+  const [flywheelLamports, platformBuybackLamports, platformRevenueLamports, basketLamports] =
     splitByBps(lamports, [
-      shares.coinBuybackBps,
-      shares.liquidityBps,
+      shares.flywheelBps,
       shares.platformBuybackBps,
       shares.platformRevenueBps,
       shares.basketBps,
     ]);
-  return { basketLamports, coinBuybackLamports, liquidityLamports, platformBuybackLamports, platformRevenueLamports };
+  return { basketLamports, flywheelLamports, platformBuybackLamports, platformRevenueLamports };
 }

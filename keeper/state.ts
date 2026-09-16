@@ -9,8 +9,7 @@ import * as path from "path";
 
 export interface Ledger {
   basketLamports: bigint;
-  coinBuybackLamports: bigint;
-  liquidityLamports: bigint;
+  flywheelLamports: bigint;
   platformBuybackLamports: bigint;
   platformRevenueLamports: bigint;
   /** Set aside from the basket pot for rounds' rent and fees; settled when each round finishes. */
@@ -169,8 +168,7 @@ export interface KeeperState {
 export function emptyLedger(): Ledger {
   return {
     basketLamports: 0n,
-    coinBuybackLamports: 0n,
-    liquidityLamports: 0n,
+    flywheelLamports: 0n,
     platformBuybackLamports: 0n,
     platformRevenueLamports: 0n,
     operationsLamports: 0n,

@@ -28,13 +28,11 @@ import { DynamicBondingCurveClient, deriveDammV2PoolAddress } from "@meteora-ag/
 import { CpAmm } from "@meteora-ag/cp-amm-sdk";
 import { OnSigned, lamportChange, resolveSignature, sendTransaction } from "../lib/send";
 import { FeeSplitBps, splitRevenue } from "./feeSplit";
-import { decideLiquidity } from "./liquidity";
 import { transferSol } from "./payouts";
 import { DAMM_V2_CUSTOMIZABLE_CONFIG, DbcPoolView, claimCurveFees, curveSwap, migrateToDammV2, readDbcPool } from "./meteora/dbc";
 import {
   DammPoolView,
   OwnedPosition,
-  addLiquidityAndLock,
   claimPositionFees,
   dammSwap,
   findLockedPosition,
@@ -115,10 +113,9 @@ export class CoinKeeper {
 
     if (view && view.phase !== "AWAITING_MIGRATION") {
       await this.attempt("platform revenue", () => this.payPlatformRevenue());
-      await this.attempt("coin buyback", () => this.buyback("coinBuybackLamports", pool, "coin buyback"));
-      await this.attempt("$STONKFOLIO buyback", () => this.buyback("platformBuybackLamports", platformTokenPool, "$STONKFOLIO buyback"));
-      await this.attempt("burn held coins", () => this.burnHeld(view.baseMint, "coinBuybackLamports"));
-      await this.attempt("liquidity", () => this.addLiquidity(view));
+      await this.attempt("$FOLIO buyback", () => this.buyback("platformBuybackLamports", platformTokenPool, "$FOLIO buyback"));
+      // Until other indexes launch, the flywheel's "top coins by market cap" is $FOLIO alone.
+      await this.attempt("Stonkfolio flywheel", () => this.buyback("flywheelLamports", platformTokenPool, "Stonkfolio flywheel"));
     }
   }
 
@@ -184,12 +181,11 @@ export class CoinKeeper {
   private creditRevenue(state: KeeperState, lamports: bigint, description: string): void {
     const split = splitRevenue(lamports, this.deps.shares);
     state.ledger.basketLamports += split.basketLamports;
-    state.ledger.coinBuybackLamports += split.coinBuybackLamports;
-    state.ledger.liquidityLamports += split.liquidityLamports;
+    state.ledger.flywheelLamports += split.flywheelLamports;
     state.ledger.platformBuybackLamports += split.platformBuybackLamports;
     state.ledger.platformRevenueLamports += split.platformRevenueLamports;
     this.deps.log(
-      `${description} → basket ${split.basketLamports}, coin buyback ${split.coinBuybackLamports}, liquidity ${split.liquidityLamports}, platform buyback ${split.platformBuybackLamports}, platform revenue ${split.platformRevenueLamports}`
+      `${description} → basket ${split.basketLamports}, flywheel ${split.flywheelLamports}, platform buyback ${split.platformBuybackLamports}, platform revenue ${split.platformRevenueLamports}`
     );
   }
 
@@ -394,41 +390,4 @@ export class CoinKeeper {
     log(`burned ${balance} of ${mint.toBase58()}`);
   }
 
-  private async addLiquidity(view: DbcPoolView): Promise<void> {
-    const { connection, cpAmm, keeper, store, thresholds, log } = this.deps;
-    const label = "liquidity";
-    if (this.isPending(label)) return;
-    const damm = view.phase === "GRADUATED" ? await readDammPool(connection, cpAmm, this.dammPoolOf(view)) : undefined;
-    const decision = decideLiquidity({
-      phase: view.phase,
-      bucketLamports: store.load().ledger.liquidityLamports,
-      poolQuoteDepthLamports: damm?.quoteDepthLamports ?? 0n,
-      targetDepthLamports: thresholds.liquidityTargetLamports,
-      minAddLamports: thresholds.minLiquidityAddLamports,
-    });
-    if (decision.addLamports > 0n && damm) {
-      const position = await this.lockedPosition(damm);
-      const { liquidityDelta } = await addLiquidityAndLock(
-        connection,
-        cpAmm,
-        keeper,
-        damm,
-        position,
-        decision.addLamports,
-        thresholds.slippageBps,
-        // Only what the transaction actually took leaves the bucket; the margin the deposit didn't use stays.
-        this.journal({ kind: "spend", bucket: "liquidityLamports", label, lamports: decision.addLamports })
-      );
-      await this.settlePending();
-      log(`added and permanently locked liquidity from up to ${decision.addLamports} lamports (+${liquidityDelta})`);
-      await this.burnHeld(view.baseMint, "liquidityLamports");
-    }
-    if (decision.toBasketLamports > 0n) {
-      const state = store.load();
-      const moved = debit(state.ledger, "liquidityLamports", decision.toBasketLamports);
-      state.ledger.basketLamports += moved;
-      store.save(state);
-      log(`pool is deep enough: moved ${moved} lamports of liquidity share to the basket`);
-    }
-  }
 }

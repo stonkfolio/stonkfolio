@@ -309,7 +309,7 @@ run(async () => {
     platformTokenPool: pool,
     store,
     engine,
-    shares: { basketBps: 7_000, coinBuybackBps: 500, liquidityBps: 500, platformBuybackBps: 1_000, platformRevenueBps: 1_000 },
+    shares: { basketBps: 7_000, flywheelBps: 500, platformBuybackBps: 1_000, platformRevenueBps: 1_500 },
     platformRevenueAddress: revenueWallet,
     thresholds: {
       minFeeClaimLamports: 5_000_000n,

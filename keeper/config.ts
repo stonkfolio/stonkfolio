@@ -56,17 +56,16 @@ export const MAX_SWAP_PRIORITY_FEE_LAMPORTS = 2_000_000n; // 0.002 SOL
 export const JUPITER_API_BASE = "https://lite-api.jup.ag/swap/v1";
 
 // --- fee split (bps of a coin's fee revenue actually received, i.e. after
-// Meteora's protocol share) — must sum to 10_000, enforced at runtime by
-// feeSplit.ts's splitByBps. Platform takes 20% (half buys back $FOLIO,
-// half is revenue); the rest is holders-first. At a 5% tier, ~$4.00 received
-// per $100 of volume: basket $2.80, coin buyback $0.20, liquidity $0.20,
-// $FOLIO buyback $0.40, platform revenue $0.40. For Stonkfolio itself
-// both buyback buckets buy $FOLIO.
+// the venue's own cut) — must sum to 10_000, enforced at runtime by
+// feeSplit.ts's splitByBps. Set by the project owner on 2026-09-15.
+// On a 5% tier a coin receives $4.00 per $100 of volume after Meteora's 20%,
+// split as basket $2.80, flywheel $0.20, $FOLIO buyback $0.40, platform
+// revenue $0.60. The flywheel buys back and burns the top coins launched
+// through Stonkfolio by market cap; until others launch that is $FOLIO itself.
 export const BASKET_SHARE_BPS = 7_000;
-export const COIN_BUYBACK_SHARE_BPS = 500;
-export const LIQUIDITY_SHARE_BPS = 500;
+export const FLYWHEEL_SHARE_BPS = 500;
 export const PLATFORM_BUYBACK_SHARE_BPS = 1_000;
-export const PLATFORM_REVENUE_SHARE_BPS = 1_000;
+export const PLATFORM_REVENUE_SHARE_BPS = 1_500;
 // The platform coin's symbol (project owner, 2026-09-14). The keeper finds the
 // platform buyback's pool in the deployment file by this symbol.
 export const PLATFORM_TOKEN_SYMBOL = "FOLIO";
@@ -77,9 +76,10 @@ export const PLATFORM_TOKEN_SYMBOL = "FOLIO";
 export const PLATFORM_REVENUE_WALLET = "EkARrDbTFynVpxQAxY11URkdxznccbzhEaexuX4GVw63";
 export const PLATFORM_REVENUE_ADDRESS = new PublicKey(process.env.PLATFORM_REVENUE_ADDRESS || PLATFORM_REVENUE_WALLET);
 
-// --- liquidity share -------------------------------------------------------
-// Added to a graduated coin's locked pool only while its SOL depth is below
-// the target (2× the 85 SOL migration threshold); above it, holders get it.
+// --- liquidity share (not wired) ---------------------------------------------
+// The launch split has no liquidity bucket (owner decision, 2026-09-16), so the
+// keeper never adds liquidity. These stay for keeper/liquidity.ts, whose
+// add-and-lock path is still covered by the fork lifecycle test.
 export const LIQUIDITY_TARGET_LAMPORTS = 170_000_000_000n;
 export const MIN_LIQUIDITY_ADD_LAMPORTS = 50_000_000n; // 0.05 SOL
 
@@ -137,7 +137,13 @@ export const MAX_PRICE_CONF_BPS = 200;
 // A payout that would need a new token account is only pushed if worth at least 3× its rent.
 export const AUTO_PUSH_MIN_RENT_MULTIPLE = 3;
 
-export const STATIC_EXCLUSIONS = [{ owner: "1nc1nerator11111111111111111111111111111111", reason: "burn address" }];
+export const STATIC_EXCLUSIONS = [
+  { owner: "1nc1nerator11111111111111111111111111111111", reason: "burn address" },
+  // The team holds the 5% dev buy here (locked, 12-month linear release). It earns no
+  // basket payouts: the team is paid by platform revenue, not by holder rewards on its
+  // own supply. The lock vault itself is excluded anyway as a program-owned account.
+  { owner: "6s4V21sES6VpvLANaBUpicZCVeTKQW3by5o2DMAsxRvg", reason: "Stonkfolio treasury (team dev buy)" },
+];
 
 /**
  * Every rule that decides who gets paid. Its hash is fixed on-chain when a
